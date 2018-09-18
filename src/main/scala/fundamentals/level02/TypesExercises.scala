@@ -1,7 +1,8 @@
 package fundamentals.level02
 
 /**
-  * These exercises introduce data types and also algebraic data types (ADTs). ADTs are a huge part of typed functional programming.
+  * These exercises introduce data types and also algebraic data types (ADTs).
+  * ADTs are a huge part of typed functional programming.
   * You will also be introduced to a very useful technique for working with ADTs, i.e. pattern matching.
   */
 object TypesExercises {
@@ -38,7 +39,7 @@ object TypesExercises {
     **/
   def showPerson1(person: Person): String =
     person match {
-      case Person(name, age) => s"${???} is ${???} years old"
+      case Person(name, age) => s"${name} is ${age} years old"
     }
 
   /**
@@ -47,7 +48,7 @@ object TypesExercises {
     * Hint: Navigate the Person class' fields using the "." operator
     */
   def showPerson2(person: Person): String =
-    s"${???} is ${???} years old"
+    s"${person.name} is ${person.age} years old"
 
   /**
     * scala> val person = Person("Bob", 50)
@@ -59,7 +60,8 @@ object TypesExercises {
     *
     * Hint: Use the .copy method
     */
-  def changeName(newName: String, person: Person): Person = ???
+  def changeName(newName: String, person: Person): Person =
+    person.copy(name = newName)
 
   /**
     * Let's look at another data type.
@@ -76,7 +78,8 @@ object TypesExercises {
     *
     * You can solve this like how you solved `showPerson1` or `showPerson2`.
     */
-  def showWallet(wallet: Wallet): String = ???
+  def showWallet(wallet: Wallet): String =
+    s"The wallet amount is ${wallet.amount}"
 
   /**
     * Here is another example of working with immutable values.
@@ -85,7 +88,11 @@ object TypesExercises {
     * scala> purchase(80, wallet)
     * = Wallet(20)
     **/
-  def purchase(cost: Double, wallet: Wallet): Wallet = ???
+  def purchase(cost: Double, wallet: Wallet): Wallet = {
+    val amountRemaining = wallet.amount - cost
+    wallet.copy(amount = amountRemaining)
+  }
+
 
   /**
     * scala> showTrafficLightStr("red")
@@ -102,7 +109,14 @@ object TypesExercises {
     * Go to `TypesExercisesTest.scala` and implement the test for this scenario: "should return a default on other inputs"
     *
     **/
-  def showTrafficLightStr(trafficLight: String): String = ???
+  def showTrafficLightStr(trafficLight: String): String =
+    trafficLight match {
+      case "red" => "The traffic light is red"
+      case "green" => "The traffic light is green"
+      case "yellow" => "The traffic light is yellow"
+      case "flashing" => "The traffic light is flashing"
+      case _ => "The traffic light is red"
+    }
 
   /**
     * We have a new traffic light called Flashing.
@@ -133,6 +147,8 @@ object TypesExercises {
 
   case object Green extends TrafficLight
 
+  case object Flashing extends TrafficLight
+
   /**
     * scala> showTrafficLight(Red)
     * = "The traffic light is red"
@@ -148,7 +164,13 @@ object TypesExercises {
     * Hint: Use pattern matching
     **/
 
-  def showTrafficLight(trafficLight: TrafficLight): String = ???
+  def showTrafficLight(trafficLight: TrafficLight): String =
+    trafficLight match {
+      case Red => "The traffic light is red"
+      case Yellow => "The traffic light is yellow"
+      case Green => "The traffic light is green"
+      case Flashing => "The traffic light is flashing"
+    }
 
   /**
     * Now introduce a new type of `TrafficLight` called `Flashing`.
