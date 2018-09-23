@@ -71,10 +71,11 @@ object ListExercises {
     * }
     * ```
     */
-  def isEmptyList[A](xs: List[A]): Boolean = xs match {
-    case Nil => true
-    case _ :: _ => false
-  }
+  def isEmptyList[A](xs: List[A]): Boolean =
+    xs match {
+      case Nil => true
+      case _ => false
+    }
 
   /**
     * scala> showListSize(List(1, 2, 3))
@@ -88,10 +89,11 @@ object ListExercises {
     *
     * Hint: Use pattern matching, string interpolation and length
     */
-  def showListSize[A](xs: List[A]): String = xs match {
-    case Nil => "This is an empty list"
-    case _ :: _ => s"This is a list of size ${xs.length}"
-  }
+  def showListSize[A](xs: List[A]): String =
+    xs match {
+      case Nil => "This is an empty list"
+      case head :: tail => s"This is a list of size ${tail.length + 1}"
+    }
 
   /**
     * Mapping a function over a List
@@ -116,7 +118,7 @@ object ListExercises {
     *
     * Hint: Use .filter and '%' for mod operator
     */
-  def filterEven(nums: List[Int]): List[Int] = nums.filter(_ % 2 == 0)
+  def filterEven(nums: List[Int]): List[Int] = nums.filter( _ % 2 == 0)
 
   /**
     * Folds
@@ -140,8 +142,7 @@ object ListExercises {
     *
     * Hint: Use .foldLeft
     */
-//  def product(nums: List[Int]): Int = nums.foldLeft(1)((acc, cur) => acc * cur)
-  def product(nums: List[Int]): Int = nums.product
+  def product(nums: List[Int]): Int = nums.foldLeft(1)(_*_)
 
   /**
     * scala> min(List(4, 6, 1))
@@ -151,16 +152,15 @@ object ListExercises {
     * = Int.MinValue
     *
     * Hint: Use pattern matching and .foldLeft
-    * Do not use: nums.min
     **/
   def min(nums: List[Int]): Int =
     nums match {
       case Nil => Int.MinValue
-      case head :: tail => tail.foldLeft(head)((prev, curr) => {
-        if (prev > curr)
-          curr
+      case head :: tail => tail.foldLeft(head)((x, y) => {
+        if (x > y)
+          y
         else
-          prev
+          x
       })
     }
 
@@ -180,8 +180,13 @@ object ListExercises {
   def youngestPerson(persons: List[Person]): Person =
     persons match {
       case Nil => Person("Nobody", 0)
-      case head :: tail => tail.foldLeft(head)((x,y) => {
-        if (x.age > y.age) y else x
+      case head :: tail => tail.foldLeft(head)((x, y) => {
+        if (x.age > y.age)
+          y
+        else
+          x
       })
+
     }
+
 }
