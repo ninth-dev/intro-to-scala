@@ -35,7 +35,11 @@ object OptionExercises1 {
     * scala> 5 / 2.toDouble
     * = 2.5
     **/
-  def safeMean(nums: List[Int]): Option[Double] = ???
+  def safeMean(nums: List[Int]): Option[Double] =
+    nums match {
+      case Nil => None
+      case nums: List[Int] => Some(nums.sum.toDouble / nums.length)
+    }
 
   /**
     * Safe constructors
@@ -58,7 +62,13 @@ object OptionExercises1 {
     *
     * Hint: Use pattern matching
     **/
-  def mkTrafficLight(str: String): Option[TrafficLight] = ???
+  def mkTrafficLight(str: String): Option[TrafficLight] =
+    str match {
+      case "red" => Some(Red)
+      case "green" => Some(Green)
+      case "yellow" => Some(Yellow)
+      case _ => None
+    }
 
   /**
     * scala> mkTrafficLightThenShow("red")
@@ -84,7 +94,11 @@ object OptionExercises1 {
     * }
     * ```
     */
-  def mkTrafficLightThenShow(str: String): String = ???
+  def mkTrafficLightThenShow(str: String): String =
+    mkTrafficLight(str) match {
+      case Some(_) => s"Traffic light is ${str}"
+      case None => s"Traffic light `${str}` is invalid"
+    }
 
   /**
     * scala> mkPerson("Bob", 20)
@@ -102,7 +116,11 @@ object OptionExercises1 {
     *
     * Hint: Don't forget every if needs an else!
     **/
-  def mkPerson(name: String, age: Int): Option[Person] = ???
+  def mkPerson(name: String, age: Int): Option[Person] =
+    if (name == "" || age < 0)
+      None
+    else
+      Some(Person(name, age))
 
   /**
     * scala> mkPersonThenChangeName("Bob", 20, "John")
@@ -116,6 +134,13 @@ object OptionExercises1 {
     *
     * Hint: Use `mkPerson` and pattern matching
     **/
-  def mkPersonThenChangeName(oldName: String, age: Int, newName: String): Option[Person] = ???
+  def mkPersonThenChangeName(oldName: String, age: Int, newName: String): Option[Person] =
+    if (newName == "")
+      None
+    else
+      mkPerson(oldName, age) match {
+        case None => None
+        case Some(person) => Some(person.copy(name = newName))
+      }
 
 }
